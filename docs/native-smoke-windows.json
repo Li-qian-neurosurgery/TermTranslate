@@ -1,0 +1,23 @@
+{
+  "checkedAt": "2026-10-11T15:06:56.476595500+00:00",
+  "checks": {
+    "clipboard_roundtrip_and_restore": "skipped: non-text clipboard",
+    "credential_cleanup": true,
+    "credential_read": true,
+    "credential_read_in_fresh_process": true,
+    "credential_write": true,
+    "oauth_large_credential_cleanup": true,
+    "oauth_large_credential_fresh_process": true,
+    "oauth_large_credential_read": true,
+    "oauth_large_credential_write": true,
+    "shortcut_conflict_detected": true,
+    "shortcut_registered": true,
+    "single_instance": true,
+    "tray_created": true,
+    "window_created": true,
+    "window_hide": true,
+    "window_restore": true
+  },
+  "passed": true,
+  "platform": "windows"
+}
