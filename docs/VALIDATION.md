@@ -1,5 +1,20 @@
 # 验证记录
 
+## 0.3.1 Apple Silicon 云构建
+
+已通过 [GitHub Actions 运行 38153926121](https://github.com/Li-qian-neurosurgery/TermTranslate/actions/runs/38153926121)，源码提交为 `e942220952e05e4e7b604affc631c36796b65a58`。构建机为 macOS 15 / arm64，Xcode 16.4、Rust 1.99.0、Node.js 24。原生诊断时间为 `2026-10-11T16:10:41.977795+00:00`（UTC）。
+
+- 前端 17 项、Rust 21 项测试全部通过。
+- 成功生成 0.3.1 的 Apple Silicon DMG 和 app ZIP；可执行文件仅包含 arm64，最低系统版本为 macOS 12.0。
+- `codesign --verify --deep --strict` 和 `hdiutil verify` 通过。使用 ad-hoc 签名，未进行 Apple Developer ID 签名或公证。
+- 云端运行打包后的 `.app`：窗口创建、隐藏与恢复、菜单栏、快捷键注册与冲突、单实例、Keychain 短凭据及大令牌分块的保存、读取、新进程读取和清除，共 15 项通过。
+- 剪贴板往返因云端剪贴板不是文本而跳过 1 项；复制功能由前端模拟测试覆盖。
+- 安装包已下载到 Windows 工作区，并再次核对 GitHub artifact SHA-256、各文件校验、ZIP 完整性、Mach-O arm64 标识、应用版本和可执行权限。
+
+原生报告见 `docs/native-smoke-macos.json`。产物位于 `release/macos-arm64/`，使用说明见 `docs/MACOS.md`。云端原生诊断不等同于 Mac 人工界面验收；尚未在用户的 Mac 上检查安装、缩放、中文输入法和真实模型登录/翻译。此次测试没有消耗真实 LLM 额度。
+
+0.3.1 Windows 界面精简已通过 17 项前端回归测试，安装并由用户确认显示符合要求。以下保留 0.3.0 Windows 版本的完整验证记录。
+
 验证日期：2026-10-11，Windows x64。
 
 版本：0.3.0。构建环境：Windows x64、Node.js 24.18.0、Rust 1.99.0（MSVC）、Microsoft C++ Build Tools、Windows SDK 26100。依赖版本见锁文件。以下区分模拟服务、原生集成和未验证项目。
@@ -57,6 +72,6 @@ Windows Credential Manager 临时测试凭据的写入、读取、新进程读�
 - 真实厂商接口及 ChatGPT 订阅：本次 0.3.0 界面回归没有发送真实模型请求，也没有代替用户完成登录授权。四类协议、OAuth 和新对话交互通过的是本地模拟服务测试；不以此宣称所有真实厂商均已完成联调。
 - 中文输入法：已验证键盘事件逻辑，尚未逐一实测不同输入法的候选交互。
 - 布局：尚未覆盖全部 Windows 缩放比例、显示器组合和超长文本场景。
-- macOS：提供 Intel/Apple Silicon 通用构建脚本、权限和签名配置入口；没有 Mac 构建、安装或 Keychain 实测结果。
+- macOS：0.3.0 时未进行验证；0.3.1 的 Apple Silicon 构建和云端 Keychain 原生诊断已完成，结果及未覆盖项目见本文顶部。
 
 模型配置、网络环境或操作系统变化可能影响结果。应用收到不完整输出时保留已有文字并显示异常状态，不将其计入成功历史。
